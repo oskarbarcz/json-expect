@@ -1,0 +1,36 @@
+name: "integrity"
+
+on:
+  pull_request:
+
+jobs:
+  files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: "Check for CRLF line endings"
+        uses: gi-org-pl/check-crlf-action@v1
+      - name: "Check for file permission changes"
+        uses: gi-org-pl/check-file-permissions-action@v1
+      - name: "Check package version is unique"
+        uses: gi-org-pl/check-version-action@v1
+        with:
+          version: "$(jq -r '.version' package.json)"
+  code:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v7
+      - name: "Build docker image"
+        run: docker compose build
+      - name: "Run lint and formatting check"
+        run: docker compose run --rm app npm run lint
+      - name: "Run type check"
+        run: docker compose run --rm app npm run typecheck
+      - name: "Run unit tests"
+        run: docker compose run --rm app npm test
+      - name: "Build package"
+        run: docker compose run --rm app npm run build

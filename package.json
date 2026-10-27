@@ -1,0 +1,49 @@
+{
+  "name": "json-expect",
+  "version": "0.1.0",
+  "description": "Deep-compare JSON against an expected document whose @tags you define yourself, the way Cucumber defines steps.",
+  "keywords": [
+    "json",
+    "deep-compare",
+    "assert",
+    "expect",
+    "matcher",
+    "cucumber",
+    "testing"
+  ],
+  "author": "oskarbarcz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oskarbarcz/json-expect.git"
+  },
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "rm -rf .test && tsc --outDir .test --declaration false --sourceMap && node --test --enable-source-maps '.test/**/*.spec.js'",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.3",
+    "@types/node": "^24.19.2",
+    "typescript": "^5.9.3"
+  }
+}
