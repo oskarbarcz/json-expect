@@ -18,3 +18,23 @@ jobs:
         run: "gh release create $(jq -r '.version' package.json) --generate-notes"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  publish:
+    needs: tag
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: "Clone repository"
+        uses: actions/checkout@v7
+      - name: "Set up Node.js"
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          registry-url: "https://registry.npmjs.org"
+      - name: "Install dependencies"
+        run: npm ci
+      - name: "Publish to npm"
+        run: npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
