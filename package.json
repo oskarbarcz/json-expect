@@ -1,6 +1,6 @@
 {
   "name": "json-expect",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Deep-compare JSON against an expected document whose @tags you define yourself, the way Cucumber defines steps.",
   "keywords": [
     "json",
