@@ -1,0 +1,14 @@
+node_modules
+dist
+.test
+
+.git
+.gitignore
+.github
+
+.idea
+.claude
+
+Dockerfile
+.dockerignore
+compose.yaml
